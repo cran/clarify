@@ -23,6 +23,8 @@ fit <- glm(re78_0 ~ treat + age + educ + race + married +
            family = binomial("probit"))
 
 ## -----------------------------------------------------------------------------
+set.seed(1234)
+
 # Drawing simulated coefficients using an HC2 robust
 # covariance matrix
 s <- sim(fit, vcov = "HC2")
@@ -96,7 +98,7 @@ est6 <- sim_ame(s, var = "treat", subset = treat == 1,
                 contrast = "rr", verbose = FALSE)
 
 ## -----------------------------------------------------------------------------
-summary(est6, null = c(NA, NA, 1))
+summary(est6, null = c(`RR` = 1))
 
 ## -----------------------------------------------------------------------------
 est7 <- sim_ame(s, var = "age", verbose = FALSE)
@@ -130,7 +132,7 @@ lalonde <- transform(lalonde, re78_0 = ifelse(re78 == 0, 1, 0))
 est6 <- transform(est6, RD = `E[Y(1)]` - `E[Y(0)]`)
 
 ## -----------------------------------------------------------------------------
-summary(est6, null = c(NA, NA, 1, 0))
+summary(est6, null = c(`RR` = 1, `RD` = 0))
 
 ## -----------------------------------------------------------------------------
 # AME of treat with race = "black"
