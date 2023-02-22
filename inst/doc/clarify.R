@@ -54,39 +54,42 @@ est2 <- sim_apply(s, FUN = sim_fun2, verbose = FALSE)
 est2
 
 ## -----------------------------------------------------------------------------
-plot(est1)
+plot(est1, reference = TRUE, ci = FALSE)
 
 ## -----------------------------------------------------------------------------
 summary(est1)
 
 ## -----------------------------------------------------------------------------
-plot(est2)
+plot(est2, reference = TRUE, ci = FALSE)
 
 summary(est2, method = "wald", null = 0)
 
 ## -----------------------------------------------------------------------------
-est3 <- sim_setx(s, x = list(treat = 0:1,
-                             re75 = c(0, 20000),
-                             race = "black"),
+est3 <- sim_setx(s,
+                 x = list(treat = 0:1,
+                          re75 = c(0, 20000),
+                          race = "black"),
                  verbose = FALSE)
 
 ## -----------------------------------------------------------------------------
 attr(est3, "setx")
 
 ## -----------------------------------------------------------------------------
-plot(est3, ci = FALSE)
+plot(est3, var = "re75", ci = FALSE)
 
 ## -----------------------------------------------------------------------------
-est4 <- sim_setx(s, x = list(treat = 0:1,
-                             re75 = seq(0, 20000, by = 2000),
-                             race = "black"),
+est4 <- sim_setx(s,
+                 x = list(treat = 0:1,
+                          re75 = seq(0, 20000, by = 2000),
+                          race = "black"),
                  verbose = FALSE)
 
 ## -----------------------------------------------------------------------------
 plot(est4)
 
 ## -----------------------------------------------------------------------------
-est5 <- sim_setx(s, x = list(treat = 0, re75 = 0),
+est5 <- sim_setx(s,
+                 x = list(treat = 0, re75 = 0),
                  x1 = list(treat = 1, re75 = 0),
                  verbose = FALSE)
 
@@ -94,7 +97,8 @@ est5 <- sim_setx(s, x = list(treat = 0, re75 = 0),
 summary(est5)
 
 ## -----------------------------------------------------------------------------
-est6 <- sim_ame(s, var = "treat", subset = treat == 1,
+est6 <- sim_ame(s,
+                var = "treat", subset = treat == 1,
                 contrast = "rr", verbose = FALSE)
 
 ## -----------------------------------------------------------------------------
@@ -160,7 +164,6 @@ summary(est10, parm = "Dh - Db")
 ## ---- include=F---------------------------------------------------------------
 amelia_ok <- requireNamespace("Amelia", quietly = TRUE)
 
-
 ## ---- eval = amelia_ok--------------------------------------------------------
 library(Amelia)
 data("africa", package = "Amelia")
@@ -186,7 +189,7 @@ sim_fun <- function(fit) {
   
   #Perturb infl slightly
   p1 <- predict(fit, newdata = transform(X, infl = infl + 1e-5))
-
+  
   return(c(AME = mean((p1 - p0) / 1e-5)))
 }
 

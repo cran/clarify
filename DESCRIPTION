@@ -1,7 +1,7 @@
 Package: clarify
 Type: Package
 Title: Simulation-Based Inference for Regression Models
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(
   person("Noah", "Greifer", role = c("aut", "cre"), 
          email = "ngreifer@iq.harvard.edu",
@@ -20,8 +20,8 @@ Description: Performs simulation-based inference as an alternative to the delta 
 License: GPL (>= 3)
 Encoding: UTF-8
 Depends: R (>= 3.5.0)
-Imports: ggplot2, pbapply, chk (>= 0.8.1), rlang, insight (>= 0.18.8),
-        marginaleffects (>= 0.8.1), mvnfast
+Imports: ggplot2, pbapply, chk (>= 0.8.1), rlang, insight (>= 0.19.0),
+        marginaleffects (>= 0.9.0), mvnfast
 Suggests: testthat (>= 3.0.0), MatchIt (>= 4.0.0), parallel, knitr,
         rmarkdown, Amelia, MASS, betareg, survey, estimatr, fixest,
         logistf, geepack, rms, robustbase, robust, AER, ivreg, mgcv,
@@ -32,11 +32,11 @@ URL: https://github.com/iqss/clarify, https://iqss.github.io/clarify/
 BugReports: https://github.com/iqss/clarify/issues
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2023-02-02 16:02:17 UTC; NoahGreifer
+Packaged: 2023-02-22 00:52:27 UTC; NoahGreifer
 Author: Noah Greifer [aut, cre] (<https://orcid.org/0000-0003-3067-7154>),
   Steven Worthington [aut] (<https://orcid.org/0000-0001-9550-5797>),
   Stefano Iacus [aut] (<https://orcid.org/0000-0002-4884-0047>),
   Gary King [aut] (<https://orcid.org/0000-0002-5327-7631>)
 Maintainer: Noah Greifer <ngreifer@iq.harvard.edu>
 Repository: CRAN
-Date/Publication: 2023-02-03 13:22:31 UTC
+Date/Publication: 2023-02-22 15:40:05 UTC
