@@ -379,12 +379,15 @@ simulate those quantities using <code>sim()</code>. <code>clarify</code>
 uses a similar approach, except that the model is fit outside
 <code>clarify</code> using functions in a different R package. In
 addition, <code>clarify</code>’s <code>sim_apply()</code> allows for the
-computation of any arbitrary quantity of interest. We’ll demonstrate how
-to replicate a standard <code>Zelig</code> analysis using
-<code>clarify</code> step-by-step. Because simulation-based inference
-involves randomness and some of the algorithms may not perfectly align,
-one shouldn’t expect results to be identical, though in most cases, they
-should be similar.</p>
+computation of any arbitrary quantity of interest. Unlike
+<code>Zelig</code>, <code>clarify</code> follows the recommendations of
+<span class="citation">Rainey (2023)</span> to use the estimates
+computed from the original model coefficients rather than the average of
+the simulated draws. We’ll demonstrate how to replicate a standard
+<code>Zelig</code> analysis using <code>clarify</code> step-by-step.
+Because simulation-based inference involves randomness and some of the
+algorithms may not perfectly align, one shouldn’t expect results to be
+identical, though in most cases, they should be similar.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## library(&quot;Zelig&quot;)</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;clarify&quot;</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span></code></pre></div>
@@ -682,6 +685,12 @@ Puhr, Rainer, Georg Heinze, Mariana Nold, Lara Lusa, and Angelika
 Geroldinger. 2017. <span>“Firth’s Logistic Regression with Rare Events:
 Accurate Effect Estimates and Predictions?”</span> <em>Statistics in
 Medicine</em> 36 (14): 2302–17. <a href="https://doi.org/10.1002/sim.7273">https://doi.org/10.1002/sim.7273</a>.
+</div>
+<div id="ref-raineyCarefulConsiderationCLARIFY2023" class="csl-entry">
+Rainey, Carlisle. 2023. <span>“A Careful Consideration of
+<span>CLARIFY</span>: Simulation-Induced Bias in Point Estimates of
+Quantities of Interest.”</span> <em>Political Science Research and
+Methods</em>, April, 1–10. <a href="https://doi.org/10.1017/psrm.2023.8">https://doi.org/10.1017/psrm.2023.8</a>.
 </div>
 </div>
 </div>
