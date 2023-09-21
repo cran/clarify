@@ -13,12 +13,12 @@ library(clarify)
 ## -----------------------------------------------------------------------------
 data("lalonde", package = "MatchIt")
 
-lalonde$re78_0 <- ifelse(lalonde$re78 == 0, 1, 0)
+lalonde$re78_0 <- ifelse(lalonde$re78 > 0, 1, 0)
 
 head(lalonde)
 
 ## -----------------------------------------------------------------------------
-fit <- glm(re78_0 ~ treat + age + educ + race + married +
+fit <- glm(re78_0 ~ treat * married + age + educ + race +
              nodegree + re74 + re75, data = lalonde,
            family = binomial("probit"))
 
@@ -72,6 +72,9 @@ est3 <- sim_setx(s,
                  verbose = FALSE)
 
 ## -----------------------------------------------------------------------------
+summary(est3)
+
+## -----------------------------------------------------------------------------
 attr(est3, "setx")
 
 ## -----------------------------------------------------------------------------
@@ -99,7 +102,7 @@ summary(est5)
 ## -----------------------------------------------------------------------------
 est6 <- sim_ame(s,
                 var = "treat", subset = treat == 1,
-                contrast = "rr", verbose = FALSE)
+                contrast = "RR", verbose = FALSE)
 
 ## -----------------------------------------------------------------------------
 summary(est6, null = c(`RR` = 1))
@@ -111,9 +114,17 @@ est7 <- sim_ame(s, var = "age", verbose = FALSE)
 summary(est7)
 
 ## -----------------------------------------------------------------------------
+est6b <- sim_ame(s,
+                 var = "treat", by = ~married,
+                 contrast = "RR", verbose = FALSE)
+
+est6b
+
+## -----------------------------------------------------------------------------
+age_seq <- seq(18, 50, by = 2)
+
 est8 <- sim_adrf(s, var = "age", contrast = "adrf",
-                 at = seq(18, 50, by = 2),
-                 verbose = FALSE)
+                 at = age_seq, verbose = FALSE)
 
 ## -----------------------------------------------------------------------------
 plot(est8)
@@ -123,20 +134,27 @@ summary(est8, parm = 1:4)
 
 ## -----------------------------------------------------------------------------
 est9 <- sim_adrf(s, var = "age", contrast = "amef",
-                 at = seq(18, 50, by = 2),
-                 verbose = FALSE)
+                 at = age_seq, verbose = FALSE)
 
 ## -----------------------------------------------------------------------------
 plot(est9)
 
 ## -----------------------------------------------------------------------------
-lalonde <- transform(lalonde, re78_0 = ifelse(re78 == 0, 1, 0))
+lalonde <- transform(lalonde,
+                     re78_0 = ifelse(re78 == 0, 1, 0))
 
 ## -----------------------------------------------------------------------------
-est6 <- transform(est6, RD = `E[Y(1)]` - `E[Y(0)]`)
+est6 <- transform(est6,
+                  RD = `E[Y(1)]` - `E[Y(0)]`)
 
 ## -----------------------------------------------------------------------------
 summary(est6, null = c(`RR` = 1, `RD` = 0))
+
+## -----------------------------------------------------------------------------
+est6b |>
+  transform(RR_ratio = `RR[1]` / `RR[0]`) |>
+  summary(parm = c("RR[0]", "RR[1]", "RR_ratio"),
+          null = 1)
 
 ## -----------------------------------------------------------------------------
 # AME of treat with race = "black"
@@ -158,7 +176,8 @@ est10 <- cbind(est10b, est10h)
 summary(est10)
 
 ## -----------------------------------------------------------------------------
-est10 <- transform(est10, `Dh - Db` = Diff_h - Diff_b)
+est10 <- transform(est10,
+                   `Dh - Db` = Diff_h - Diff_b)
 summary(est10, parm = "Dh - Db")
 
 ## ---- include=F---------------------------------------------------------------
@@ -190,7 +209,7 @@ sim_fun <- function(fit) {
   #Perturb infl slightly
   p1 <- predict(fit, newdata = transform(X, infl = infl + 1e-5))
   
-  return(c(AME = mean((p1 - p0) / 1e-5)))
+ c(AME = mean((p1 - p0) / 1e-5))
 }
 
 est_mi <- sim_apply(si, FUN = sim_fun, verbose = FALSE)
@@ -199,4 +218,6 @@ summary(est_mi)
 
 ## ---- eval = amelia_ok--------------------------------------------------------
 est_mi2 <- sim_ame(si, var = "infl", verbose = FALSE)
+
+summary(est_mi2)
 

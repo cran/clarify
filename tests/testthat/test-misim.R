@@ -1,4 +1,6 @@
 test_that("misim() works with lists of regressions", {
+  skip_if(!file.exists(test_path("fixtures", "model_list.rds")))
+
   m <- readRDS(test_path("fixtures", "model_list.rds"))
 
   s <- misim(m, n = 5)
@@ -58,6 +60,8 @@ test_that("misim() works with lists of regressions", {
 })
 
 test_that("misim() works with mira objects", {
+  skip_if(!file.exists(test_path("fixtures", "mira.rds")))
+
   m <- readRDS(test_path("fixtures", "mira.rds"))
 
   s <- misim(m, n = 5)
@@ -117,6 +121,8 @@ test_that("misim() works with mira objects", {
 })
 
 test_that("misim() works with mimira objects", {
+  skip_if(!file.exists(test_path("fixtures", "mimira.rds")))
+
   m <- readRDS(test_path("fixtures", "mimira.rds"))
 
   s <- misim(m, n = 5)
@@ -177,6 +183,8 @@ test_that("misim() works with mimira objects", {
 })
 
 test_that("sim_ame() works with misim() and glm()", {
+  skip_if(!file.exists(test_path("fixtures", "model_list.rds")))
+
   m <- readRDS(test_path("fixtures", "model_list.rds"))
 
   s <- misim(m, n = 5)
@@ -224,7 +232,7 @@ test_that("sim_ame() works with misim() and glm()", {
   expect_equal(nrow(e), nrow(s$sim.coefs))
   expect_equal(attr(e, "sim_hash"), attr(s, "sim_hash"))
   expect_equal(ncol(e), 1)
-  expect_identical(names(e), "dY/d(age)")
+  expect_identical(names(e), "E[dY/d(age)]")
   expect_identical(attr(e, "var"), "age")
 
   expect_warning(sim_ame(s, "age", contrast = "diff", verbose = FALSE),

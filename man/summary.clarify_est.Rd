@@ -13,6 +13,7 @@
   level = 0.95,
   method = "quantile",
   reference = FALSE,
+  ncol = 3,
   ...
 )
 
@@ -30,6 +31,8 @@
 \item{method}{the method used to compute p-values and confidence intervals. Can be \code{"wald"} to use a Normal approximation or \code{"quantile"} to use the simulated sampling distribution (default). See Details. Abbreviations allowed.}
 
 \item{reference}{\code{logical}; whether to overlay a normal density reference distribution over the plots. Default is \code{FALSE}.}
+
+\item{ncol}{the number of columns used when wrapping multiple plots; default is 3.}
 
 \item{...}{for \code{plot()}, further arguments passed to \code{\link[ggplot2:geom_density]{ggplot2::geom_density()}}.}
 
@@ -89,7 +92,7 @@ plot(est, parm = c("RD", "RR"), ci = TRUE)
 
 }
 \references{
-Rainey, C. (2023). A careful consideration of CLARIFY: Simulation-induced bias in point estimates of quantities of interest. \emph{Political Science Research and Methods}, 1–10. \doi{doi.org/10.1017/psrm.2023.8}
+Rainey, C. (2023). A careful consideration of CLARIFY: Simulation-induced bias in point estimates of quantities of interest. \emph{Political Science Research and Methods}, 1–10. \doi{10.1017/psrm.2023.8}
 }
 \seealso{
 \itemize{
