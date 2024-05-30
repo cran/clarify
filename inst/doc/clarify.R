@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -180,10 +180,10 @@ est10 <- transform(est10,
                    `Dh - Db` = Diff_h - Diff_b)
 summary(est10, parm = "Dh - Db")
 
-## ---- include=F---------------------------------------------------------------
+## ----include=F----------------------------------------------------------------
 amelia_ok <- requireNamespace("Amelia", quietly = TRUE)
 
-## ---- eval = amelia_ok--------------------------------------------------------
+## ----eval = amelia_ok---------------------------------------------------------
 library(Amelia)
 data("africa", package = "Amelia")
 
@@ -199,7 +199,7 @@ si <- misim(model.list, n = 200)
 
 si
 
-## ---- eval = amelia_ok--------------------------------------------------------
+## ----eval = amelia_ok---------------------------------------------------------
 sim_fun <- function(fit) {
   #Extract the original dataset using get_predictors()
   X <- insight::get_predictors(fit)
@@ -216,7 +216,7 @@ est_mi <- sim_apply(si, FUN = sim_fun, verbose = FALSE)
 
 summary(est_mi)
 
-## ---- eval = amelia_ok--------------------------------------------------------
+## ----eval = amelia_ok---------------------------------------------------------
 est_mi2 <- sim_ame(si, var = "infl", verbose = FALSE)
 
 summary(est_mi2)
